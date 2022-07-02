@@ -2,6 +2,27 @@
   text-align: center;
 }
 
+.dropdown-btn{
+  background-color: green;
+  border-radius: 100px;
+  width: 30px;
+  height: 30px;
+  margin-left: -12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  
+  cursor: pointer;
+}
+.rounded-btn{
+      background-color: green;
+      border-radius: 100px;
+      width: 30px;
+      height: 30px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin-bottom: 20px;
+      margin-left: 90%;
+      cursor: pointer;
+    
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
