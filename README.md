@@ -4,7 +4,9 @@ MyReads is simple app which allows to place books on three different shelves nam
 
 ## Installation guide
 
-`$ git clone https://github.com/Anjlee2022skipq/myreads-app.git $ cd myreads-app $ npm install`
+`$ git clone https://github.com/Anjlee2022skipq/myreads-app.git`
+`$ cd myreads-app`
+`$ npm install`
 
 ## Run Project
 
