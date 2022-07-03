@@ -1,35 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
-import BookService from "../services/BookService";
+import React from "react";
 import BookShelf from "./BookShelf";
 import { useNavigate } from "react-router-dom";
-
-function HomePage() {
+import PropTypes from "prop-types";
+function HomePage({ books, shelfHandler }) {
   const navigate = useNavigate();
-  const bookService = useMemo(() => new BookService(), []);
-  const [books, setBooks] = useState([]);
-
-  const changeShelf = (bookId, shelfName) => {
-    bookService.updateShelf(bookId, shelfName);
-    const updatedBooks = books
-      .filter((b) => b.id == bookId)
-      .map((b) => (b.shelf = shelfName));
-    setBooks(updatedBooks);
-  };
 
   const searchHandler = () => {
     navigate("/search");
   };
-
-  useEffect(() => {
-    bookService
-      .getAllBooks()
-      .then((res) => {
-        setBooks(res.data.books);
-      })
-      .catch((err) => {
-        console.log("Error: " + err);
-      });
-  }, [books]);
 
   return (
     <>
@@ -40,6 +18,7 @@ function HomePage() {
             backgroundColor: "green",
             color: "white",
             padding: "5px",
+            textAlign: "center",
           }}
         >
           My Reads
@@ -48,22 +27,26 @@ function HomePage() {
 
       <BookShelf
         shelfName="Currently Reading"
-        books={books.filter((b) => b.shelf == "currentlyReading")}
-        shelfHandler={changeShelf}
+        books={books.filter((b) => b.shelf === "currentlyReading")}
+        shelfHandler={shelfHandler}
       />
       <BookShelf
         shelfName="Read"
-        books={books.filter((b) => b.shelf == "read")}
-        shelfHandler={changeShelf}
+        books={books.filter((b) => b.shelf === "read")}
+        shelfHandler={shelfHandler}
       />
       <BookShelf
         shelfName="Want to Read"
-        books={books.filter((b) => b.shelf == "wantToRead")}
-        shelfHandler={changeShelf}
+        books={books.filter((b) => b.shelf === "wantToRead")}
+        shelfHandler={shelfHandler}
       />
       <div className=" rounded-btn " onClick={searchHandler}></div>
     </>
   );
 }
+HomePage.prototype = {
+  books: PropTypes.array,
+  shelfHandler: PropTypes.func,
+};
 
 export default HomePage;

@@ -1,45 +1,45 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import PropTypes from "prop-types";
 import SearchInput from "./SearchInput";
 import BookService from "../services/BookService";
 import SearchResult from "./SearchResult";
-function SearchPage() {
+
+function SearchPage({ shelfBooks, shelfHandler }) {
   const bookService = useMemo(() => new BookService(), []);
-
-  const [shelfBooks, setShelfbooks] = useState([]);
-  const [books, setBooks] = useState([]);
-
-  const changeShelf = (bookId, shelfName) => {
-    console.log("iam called");
-    bookService.updateShelf(bookId, shelfName);
-  };
+  const [searchedBooks, setSearchedbooks] = useState([]);
 
   const handleSearch = (query) => {
+    const searchTerm = query.trim();
+    if (searchTerm === "") {
+      return setSearchedbooks([]);
+    }
     bookService
-      .searchBookByInput(query)
+      .searchBookByInput(searchTerm)
       .then((res) => {
-        setBooks(res.data.books);
+        setSearchedbooks(res.data.books);
       })
       .catch((err) => {
         console.log("Error: " + err);
       });
   };
-  useEffect(() => {
-    bookService.getAllBooks().then((res) => {
-      setShelfbooks(res.data.books);
-    });
-  }, []);
 
   return (
-    <div style={{ width: "100%", border: "1px solid black" }}>
+    <div>
       <SearchInput handleSearch={handleSearch} />
 
-      <SearchResult
-        books={books}
-        shelfHandler={changeShelf}
-        shelfBooks={shelfBooks}
-      />
+      {searchedBooks.length > 0 && (
+        <SearchResult
+          books={searchedBooks}
+          shelfHandler={shelfHandler}
+          shelfBooks={shelfBooks}
+        />
+      )}
     </div>
   );
 }
+SearchPage.prototype = {
+  shelfBooks: PropTypes.array,
+  shelfHandler: PropTypes.func,
+};
 
 export default SearchPage;

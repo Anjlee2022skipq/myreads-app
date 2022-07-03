@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BookItem from "./BookItem";
-
+import PropTypes from "prop-types";
 function BookShelf({ shelfName, books, shelfHandler }) {
   return (
     <div className="p-2">
@@ -14,5 +14,9 @@ function BookShelf({ shelfName, books, shelfHandler }) {
     </div>
   );
 }
-
+BookShelf.prototype = {
+  shelfName: PropTypes.string,
+  books: PropTypes.array,
+  shelfHandler: PropTypes.func,
+};
 export default BookShelf;
