@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function BookItem({ book, shelfHandler }) {
+  console.log();
   return (
     <div className="col-md-3 px-4 py-2 m-2 d-flex">
-      {book.imageLinks && (
+      {book.imageLinks && book.authors && (
         <div className=" flex-grow-1 px-5 mt-1 ">
           <div className="d-flex justify-content-center">
             <div className="d-flex align-items-end">
@@ -22,7 +23,7 @@ function BookItem({ book, shelfHandler }) {
                     opacity: "0",
                     cursor: "pointer",
                   }}
-                  value={book.shelf}
+                  value={book.shelf ? book.shelf : "none"}
                   onChange={(e) => shelfHandler(book.id, e.target.value)}
                 >
                   <option value="move" disabled>
@@ -39,7 +40,7 @@ function BookItem({ book, shelfHandler }) {
           {book.title}
           <div className="text-muted">
             {book.authors.map((a) => (
-              <span>{a} </span>
+              <span key={a}>{a} </span>
             ))}
           </div>
         </div>
